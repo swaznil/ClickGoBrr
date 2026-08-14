@@ -6,6 +6,7 @@
   --text: #e5eadd;
   --muted: #8a9185;
   --accent: #96f84b;
+  --error: #f46666;
 }
 
 * {
@@ -32,7 +33,7 @@ button {
 }
 
 .site-header {
-  width: min(1200px, 100%);
+  width: min(1100px, 100%);
   margin: 0 auto 64px;
 }
 
@@ -64,7 +65,7 @@ button:hover {
 }
 
 .typing-test {
-  width: min(1200px, 100%);
+  width: min(1100px, 100%);
 }
 
 .test-heading {
@@ -87,9 +88,7 @@ h1 {
 
 .timer {
   margin: 0;
-
   color: var(--muted);
-
   text-align: right;
 }
 .timer span {
@@ -101,9 +100,29 @@ h1 {
   font-size: 2rem;
 }
 
-.typing-area {
+.source-row {
   margin-top: 32px;
-  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+  background: none;
+}
+.text-button:hover {
+  color: var(--accent);
+  background: none;
+}
+.typing-area {
+  margin-top: 12px;
+  padding: clamp(20px, 2.5vw, 30px);
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
@@ -112,13 +131,16 @@ h1 {
 
 .typing-area:focus {
   border-color: var(--accent);
-  outline: 3px solid rgb(152 253 75 / 12%);
+  outline: 3px solid rgb(150 248 75 / 12%);
+}
+.typing-area.finished {
+  opacity: 0.65;
 }
 
 #prompt {
   margin: 0;
   color: var(--muted);
-  font-size: clamp(1.15rem, 3vw, 1.6rem);
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
   line-height: 1.8;
   user-select: none;
 }
@@ -130,17 +152,16 @@ h1 {
   color: var(--text);
 }
 .char.incorrect {
-  color: #fe6e6e;
+  color: var(--error);
 }
 .char.current {
   border-bottom: 2px solid var(--accent);
 }
 
 .hint {
+  min-height: 1rem;
   margin: 10px 0 0;
-
   color: var(--muted);
-
   font-size: 0.75rem;
 }
 
@@ -161,7 +182,9 @@ h1 {
   .test-heading {
     align-items: start;
   }
-
+  .source-row {
+    align-items: start;
+  }
   .results {
     gap: 14px;
   }
