@@ -26,46 +26,45 @@
           <h1>How fast can you type?</h1>
         </div>
 
-        <p class="timer">
+        <div class="timer">
           <span id="time">30</span>
-          <span>seconds</span>
-        </p>
+          <span id="timer-unit">seconds</span>
+        </div>
+      </div>
+
+      <div class="test-options">
+        <div class="mode-options">
+          <button class="mode-button active" data-mode="time">Time</button>
+          <button class="mode-button" data-mode="words">Words</button>
+        </div>
+
+        <div id="length-options" class="length-options"></div>
       </div>
 
       <div class="source-row">
         <span id="source">Walden — Henry David Thoreau</span>
-
-        <button id="next-button" class="text-button" type="button">
-          new text
-        </button>
+        <button id="next-button" class="text-button">new text</button>
       </div>
 
-      <div
-        id="typing-area"
-        class="typing-area"
-        tabindex="0"
-        aria-label="Typing test"
-      >
+      <div id="typing-area" class="typing-area" tabindex="0">
         <p id="prompt"></p>
       </div>
 
-      <p class="hint">click the text and start typing</p>
+      <p id="status" class="hint">
+        click the text and start typing
+      </p>
 
       <div class="results">
         <p>
-          <strong id="wpm">0</strong>
-          WPM
+          <strong id="wpm">0</strong> WPM
         </p>
 
         <p>
-          <strong id="accuracy">100</strong>%
-          accuracy
+          <strong id="accuracy">100</strong>% accuracy
         </p>
       </div>
 
-      <button id="restart-button" type="button">
-        Restart
-      </button>
+      <button id="restart-button">Restart</button>
 
     </section>
   </main>

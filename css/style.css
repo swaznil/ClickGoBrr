@@ -165,12 +165,46 @@ h1 {
   font-size: 0.75rem;
 }
 
+.test-options {
+  margin: 32px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.mode-options,
+.length-options {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.test-options button {
+  padding: 7px 10px;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+}
+
+.test-options button:hover {
+  color: var(--text);
+  background: transparent;
+}
+
+.test-options button.active {
+  color: var(--accent);
+}
+
+.mode-options {
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+}
+
 .results {
   display: flex;
   gap: 24px;
-
   margin: 20px 0;
-
   color: var(--muted);
 }
 

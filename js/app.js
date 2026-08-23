@@ -1,12 +1,23 @@
 const promptElement = document.getElementById("prompt");
 const typingArea = document.getElementById("typing-area");
+
 const timeElement = document.getElementById("time");
+const timerUnitElement = document.getElementById("timer-unit");
+
 const wpmElement = document.getElementById("wpm");
 const accuracyElement = document.getElementById("accuracy");
+
 const sourceElement = document.getElementById("source");
 const statusElement = document.getElementById("status");
+
 const restartButton = document.getElementById("restart-button");
 const nextButton = document.getElementById("next-button");
+
+const lengthOptionsElement = document.getElementById("length-options");
+const modeButtons = document.querySelectorAll(".mode-button");
+
+const timeOptions = [15, 30, 60];
+const wordOptions = [10, 25, 50];
 
 const passages = [
   {
@@ -32,18 +43,45 @@ const passages = [
 
 const state = {
   passageIndex: 0,
+  mode: "time",
+  option: 30,
+
   text: "",
   typed: "",
   timeLeft: 30,
   started: false,
   finished: false,
+  startTime: null,
   timer: null,
 };
 
 function loadPassage() {
   const passage = passages[state.passageIndex];
-  state.text = passage.text;
-  sourceElement.textContent = passage.source;
+  if (state.mode === "time") {
+    state.text = passage.text;
+    sourceElement.textContent = passage.source;
+  } else {
+    const words = [];
+    let index = state.passageIndex;
+
+    while (words.length < state.option) {
+      const currentPassage = passages[index];
+      words.push(...currentPassage.text.split(/\s+/));
+      index++;
+
+      if (index >= passages.length) {
+        index = 0;
+      }
+    }
+    state.text = words.slice(0, state.option).join(" ");
+
+    if (state.option <= passage.text.split(/\s+/).length) {
+      sourceElement.textContent = passage.source;
+    } else {
+      sourceElement.textContent = "Mixed passages";
+    }
+  }
+
   renderText();
 }
 
@@ -71,6 +109,33 @@ function renderText() {
   }
 }
 
+function renderOptions() {
+  lengthOptionsElement.innerHTML = "";
+
+  const options = state.mode === "time" ? timeOptions : wordOptions;
+
+  for (const option of options) {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.textContent = option;
+
+    if (option === state.option) {
+      button.classList.add("active");
+    }
+
+    button.addEventListener("click", () => {
+      state.option = option;
+
+      renderOptions();
+      loadPassage();
+      resetTest();
+    });
+
+    lengthOptionsElement.appendChild(button);
+  }
+}
+
 function calculateStats() {
   if (state.typed.length === 0) {
     return {
@@ -90,7 +155,12 @@ function calculateStats() {
 
   const totalTyped = state.typed.length;
   const accuracy = Math.round((correct / totalTyped) * 100);
-  const secondsUsed = 30 - state.timeLeft;
+  let secondsUsed = 0;
+
+  if (state.started && state.startTime !== null) {
+    secondsUsed = Math.max(1, (Date.now() - state.startTime) / 1000);
+  }
+
   let wpm = 0;
 
   if (secondsUsed > 0) {
@@ -112,18 +182,42 @@ function updateStats() {
   accuracyElement.textContent = stats.accuracy;
 }
 
-function startTimer() {
-  state.started = true;
-  statusElement.textContent = "typing...";
-  state.timer = setInterval(() => {
-    state.timeLeft--;
-    timeElement.textContent = state.timeLeft;
-    updateStats();
+function updateWordsRemaining() {
+  if (state.mode !== "words") {
+    return;
+  }
 
-    if (state.timeLeft <= 0) {
-      finishTest();
-    }
-  }, 1000);
+  let completedWords = 0;
+
+  if (state.typed.length > 0) {
+    completedWords = (state.typed.match(/ /g) || []).length;
+  }
+
+  if (state.typed.length === state.text.length) {
+    completedWords = state.option;
+  }
+
+  const remaining = Math.max(0, state.option - completedWords);
+
+  timeElement.textContent = remaining;
+}
+
+function startTest() {
+  state.started = true;
+  state.startTime = Date.now();
+  statusElement.textContent = "typing...";
+
+  if (state.mode === "time") {
+    state.timer = setInterval(() => {
+      state.timeLeft--;
+      timeElement.textContent = state.timeLeft;
+      updateStats();
+
+      if (state.timeLeft <= 0) {
+        finishTest();
+      }
+    }, 1000);
+  }
 }
 
 function finishTest() {
@@ -136,6 +230,9 @@ function finishTest() {
   state.timer = null;
   typingArea.classList.add("finished");
   statusElement.textContent = "finished — restart or choose a new text";
+  if (state.mode === "words") {
+    timeElement.textContent = 0;
+  }
 
   updateStats();
   renderText();
@@ -153,6 +250,7 @@ function handleTyping(event) {
     }
 
     state.typed = state.typed.slice(0, -1);
+    updateWordsRemaining();
     renderText();
     updateStats();
     return;
@@ -167,10 +265,11 @@ function handleTyping(event) {
   }
 
   if (!state.started) {
-    startTimer();
+    startTest();
   }
 
   state.typed += event.key;
+  updateWordsRemaining();
   renderText();
   updateStats();
 
@@ -183,12 +282,14 @@ function resetTest() {
   clearInterval(state.timer);
 
   state.typed = "";
-  state.timeLeft = 30;
+  state.timeLeft = state.mode === "time" ? state.option : 0;
   state.started = false;
   state.finished = false;
+  state.startTime = null;
   state.timer = null;
 
-  timeElement.textContent = 30;
+  timeElement.textContent = state.option;
+  timerUnitElement.textContent = state.mode === "time" ? "seconds" : "words";
   wpmElement.textContent = 0;
   accuracyElement.textContent = 100;
 
@@ -208,9 +309,29 @@ function nextPassage() {
   resetTest();
 }
 
+modeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    state.mode = button.dataset.mode;
+
+    state.option = state.mode === "time" ? 30 : 25;
+
+    modeButtons.forEach((item) => {
+      item.classList.toggle("active", item === button);
+    });
+
+    renderOptions();
+    loadPassage();
+    resetTest();
+  });
+});
+
 typingArea.addEventListener("keydown", handleTyping);
-typingArea.addEventListener("click", () => {typingArea.focus();});
+typingArea.addEventListener("click", () => {
+  typingArea.focus();
+});
 restartButton.addEventListener("click", resetTest);
 nextButton.addEventListener("click", nextPassage);
 
+renderOptions();
 loadPassage();
+resetTest();
