@@ -47,7 +47,10 @@
       </div>
 
       <div id="typing-area" class="typing-area" tabindex="0">
-        <p id="prompt"></p>
+        <div class="prompt-viewport">
+          <p id="prompt"></p>
+          <span id="caret" class="caret"></span>
+        </div>
       </div>
 
       <p id="status" class="hint">
@@ -65,6 +68,33 @@
       </div>
 
       <button id="restart-button">Restart</button>
+
+      <section id="result" class="result" hidden>
+        <div class="result-main">
+          <strong id="result-wpm">0</strong>
+          <span>WPM</span>
+        </div>
+
+        <div class="result-stats">
+
+          <div>
+            <span>accuracy</span>
+            <strong id="result-accuracy">100%</strong>
+          </div>
+
+          <div>
+            <span>time</span>
+            <strong id="result-time">0s</strong>
+          </div>
+
+          <div>
+            <span>personal best</span>
+            <strong id="result-best">—</strong>
+          </div>
+        </div>
+
+        <button id="result-restart">Run again</button>
+      </section>
 
     </section>
   </main>
