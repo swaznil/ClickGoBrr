@@ -8,11 +8,13 @@
 
   <link rel="stylesheet" href="css/style.css">
 
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/main.js"></script>
 </head>
 
 <body>
 
+  <canvas id = "Background" class="background"></canvas>
+  
   <header class="site-header">
     <a class="logo" href="/">ClickGoBrr</a>
   </header>
@@ -53,18 +55,11 @@
         </div>
       </div>
 
-      <p id="status" class="hint">
-        click the text and start typing
-      </p>
+      <p id="status" class="hint">click the text and start typing</p>
 
       <div class="results">
-        <p>
-          <strong id="wpm">0</strong> WPM
-        </p>
-
-        <p>
-          <strong id="accuracy">100</strong>% accuracy
-        </p>
+        <p><strong id="wpm">0</strong> WPM</p>
+        <p><strong id="accuracy">100</strong>% accuracy</p>
       </div>
 
       <button id="restart-button">Restart</button>
@@ -76,7 +71,6 @@
         </div>
 
         <div class="result-stats">
-
           <div>
             <span>accuracy</span>
             <strong id="result-accuracy">100%</strong>
@@ -95,9 +89,7 @@
 
         <button id="result-restart">Run again</button>
       </section>
-
     </section>
   </main>
-
 </body>
 </html>

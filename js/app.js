@@ -1,3 +1,4 @@
+export function initTypingTest() {
 const promptElement = document.getElementById("prompt");
 const typingArea = document.getElementById("typing-area");
 
@@ -24,26 +25,37 @@ const resultAccuracyElement = document.getElementById("result-accuracy");
 const resultBestElement = document.getElementById("result-best");
 const resultRestartButton = document.getElementById("result-restart");
 
-
 const timeOptions = [15, 30, 60];
 const wordOptions = [10, 25, 50];
 
 const passages = [
   {
-    source: "Walden — Henry David Thoreau",
-    text: "I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach.",
+    source: "The Adventures of Sherlock Holmes — Arthur Conan Doyle",
+    text: "To Sherlock Holmes she is always the woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer.",
   },
   {
-    source: "Self-Reliance — Ralph Waldo Emerson",
-    text: "Trust thyself: every heart vibrates to that iron string. Accept the place the divine providence has found for you, the society of your contemporaries, the connection of events.",
+    source: "The Time Machine — H. G. Wells",
+    text: "The Time Traveller was expounding a recondite matter to us. His grey eyes shone and twinkled, and his usually pale face was flushed and animated. The fire burned brightly, and the soft radiance of the incandescent lights in the lilies of silver caught the bubbles that flashed and passed in our glasses. Our chairs, being his patents, embraced and caressed us rather than submitted to be sat upon, and there was that luxurious after-dinner atmosphere when thought roams gracefully free of the trammels of precision.",
   },
   {
-    source: "The Importance of Being Earnest — Oscar Wilde",
-    text: "The truth is rarely pure and never simple. Modern life would be very tedious if it were either, and modern literature a complete impossibility.",
+    source: "Frankenstein — Mary Shelley",
+    text: "It was on a dreary night of November that I beheld the accomplishment of my toils. With an anxiety that almost amounted to agony, I collected the instruments of life around me, that I might infuse a spark of being into the lifeless thing that lay at my feet. It was already one in the morning; the rain pattered dismally against the panes, and my candle was nearly burnt out, when, by the glimmer of the half-extinguished light, I saw the dull yellow eye of the creature open.",
   },
   {
-    source: "Civil Disobedience — Henry David Thoreau",
-    text: "The progress from an absolute to a limited monarchy, from a limited monarchy to a democracy, is a progress toward a true respect for the individual.",
+    source: "Twilight Clouds on Mars — NASA-inspired",
+    text: "Imagine standing on Mars just after sunset and looking up to find clouds glowing red and green against the fading sky. Curiosity has observed these twilight clouds several times from Gale Crater. Some contain frozen carbon dioxide, better known as dry ice, rather than only water ice. Scientists can study the way sunlight scatters through them to estimate the size and growth of their particles. Stranger still, the phenomenon appears predictably during a particular season, yet similar carbon dioxide clouds have not been observed everywhere on Mars. A beautiful sunset can therefore become a useful scientific puzzle about the structure and behavior of an alien atmosphere.",
+  },
+  {
+    source: "A Very Strange Object in Space — NASA-inspired",
+    text: "Astronomers occasionally discover something that refuses to fit neatly into the categories they already understand. One such object, ASKAP J1832-0911, produces repeating changes in radio waves over periods of tens of minutes. Observations with the Chandra X-ray Observatory revealed something even stranger: its X-rays also vary on a cycle of about forty-four minutes. Researchers have proposed several possible explanations, but the object's behavior remains unusual. Discoveries like this are useful precisely because they are confusing. An observation that breaks an existing explanation can force scientists to reconsider assumptions, gather new evidence and sometimes discover an entirely new class of objects.",
+  },
+  {
+    source: "The Moon's Frozen Shadows — NASA-inspired",
+    text: "Near the Moon's south pole, sunlight and darkness create an environment unlike almost anywhere on Earth. Some high ridges can remain illuminated for long periods while the floors of nearby craters sit in permanent shadow. These dark regions become extraordinarily cold and can preserve deposits of water ice. That ice is scientifically interesting because it may contain clues about the Moon's history, but it could also matter to future explorers. Water can be used directly, while its hydrogen and oxygen can potentially support life or become ingredients for rocket propellant. A frozen crater on the Moon may therefore be both an archive of the past and a resource for future exploration.",
+  },
+  {
+    source: "Borrowing Ideas From Nature — Smithsonian-inspired",
+    text: "Some inventions begin not with a machine but with an animal, plant or microscopic structure. Biomimicry is the practice of studying solutions that evolved in nature and adapting their principles to human problems. Researchers might examine how an insect folds its wings, how an animal resists a toxin or how a biological structure repairs itself. The goal is not necessarily to copy nature exactly. Instead, scientists look for mechanisms that reveal a useful engineering idea. Nature has spent billions of years producing strange solutions to problems involving movement, strength, survival and efficiency, which makes the living world an enormous library of designs waiting to be understood.",
   },
 ];
 
@@ -284,7 +296,8 @@ function finishTest() {
     return;
   }
 
-  state.elapsed = state.startTime === null ? 0 : (Date.now() - state.startTime) / 1000;
+  state.elapsed =
+    state.startTime === null ? 0 : (Date.now() - state.startTime) / 1000;
   state.finished = true;
   clearInterval(state.timer);
   state.timer = null;
@@ -412,3 +425,4 @@ window.addEventListener("resize", positionText);
 renderOptions();
 loadPassage();
 resetTest();
+}
