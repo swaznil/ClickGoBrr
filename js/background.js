@@ -28,10 +28,10 @@ function resize() {
   const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
 
   canvas.width = Math.round(window.innerWidth * ratio);
-  canvas.height = Math.round(window.innerWidth * ratio);
+  canvas.height = Math.round(window.innerHeight * ratio);
 
   canvas.style.width = `${window.innerWidth}px`;
-  canvas.style.height = `${window.innerWidth}px`;
+  canvas.style.height = `${window.innerHeight}px`;
 
   context.setTransform(ratio, 0, 0, ratio, 0, 0);
 

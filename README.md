@@ -1,5 +1,7 @@
 # ClickGoBrr
 
+ClickGoBrr is a typing test designed with a retrowave aesthetic.
+
 ## Feature
 
 - Time Mode and Words mode
@@ -23,3 +25,5 @@ clickgobrr
 ---
 
 ## AI usage
+
+AI has been used to review and improve javascript code, but all the coding and final implementations were done by me.

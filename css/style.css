@@ -63,7 +63,7 @@ main {
 button {
   padding: 10px 16px;
   border: 1px solid var(--accent);
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--accent);
   font: inherit;
   background: transparent;
@@ -118,7 +118,7 @@ h1 {
   justify-content: space-between;
   gap: 20px;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
 
 .text-button {
@@ -289,6 +289,47 @@ h1 {
 }
 .result-stats strong {
   font-size: 1.2rem;
+}
+
+.shortcuts {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  z-index: 2;
+  display: flex;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  transform: translateX(-50%);
+}
+.shortcuts kbd {
+  padding: 2px 5px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+}
+
+body.focus-mode .site-header,
+body.focus-mode .test-heading,
+body.focus-mode .test-options,
+body.focus-mode .source-row,
+body.focus-mode .results,
+body.focus-mode #restart-button,
+body.focus-mode .hint,
+body.focus-mode .shortcuts {
+  opacity: 0.06;
+}
+
+body.focus-mode .typing-area {
+  border-color: transparent;
+  background: transparent;
+}
+
+.site-header,.test-heading,
+.test-options,.source-row,
+.results,#restart-button,
+.hint,.shortcuts {
+  transition: opacity 150ms ease;
 }
 
 @media (max-width: 600px) {

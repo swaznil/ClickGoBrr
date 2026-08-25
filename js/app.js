@@ -73,6 +73,24 @@ const state = {
   timer: null,
 };
 
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab") {
+    event.preventDefault();
+    resetTest();
+    return;
+  }
+
+  if (event.key === "Enter" && event.shiftKey) {
+    event.preventDefault();
+    nextPassage();
+    return;
+  }
+
+  if (event.key === "Escape") {
+    document.body.classList.toggle("focus-mode");
+  }
+});
+
 function loadPassage() {
   const passage = passages[state.passageIndex];
   if (state.mode === "time") {
