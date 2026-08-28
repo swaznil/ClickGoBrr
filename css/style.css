@@ -332,6 +332,33 @@ body.focus-mode .typing-area {
   transition: opacity 150ms ease;
 }
 
+.ghost-caret {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 2px;
+  height: 1.5em;
+  background: var(--ghost);
+  opacity: 0.6;
+  pointer-events: none;
+  transform: translate(0, 0);
+  transition: transform 80ms linear;
+}
+
+.ghost-caret::after {
+  content: "PB";
+  position: absolute;
+  top: -12px;
+  left: 4px;
+  color: var(--ghost);
+  font-size: 0.45rem;
+}
+
+.ghost-caret.hidden {
+  display: none;
+}
+
 @media (max-width: 600px) {
   .test-heading {
     align-items: start;

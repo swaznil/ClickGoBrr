@@ -1,3 +1,5 @@
+import { createGhostRace } from "./extra.js";
+
 export function initTypingTest() {
 const promptElement = document.getElementById("prompt");
 const typingArea = document.getElementById("typing-area");
@@ -24,6 +26,8 @@ const resultTimeElement = document.getElementById("result-time");
 const resultAccuracyElement = document.getElementById("result-accuracy");
 const resultBestElement = document.getElementById("result-best");
 const resultRestartButton = document.getElementById("result-restart");
+
+const ghostElement = document.getElementById("ghost-caret");
 
 const timeOptions = [15, 30, 60];
 const wordOptions = [10, 25, 50];
@@ -89,6 +93,15 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     document.body.classList.toggle("focus-mode");
   }
+});
+
+const ghostRace = createGhostRace({
+  promptElement,
+  ghostElement,
+  getElapsedTime,
+
+  getKey: () =>
+    `clickgobrr-ghost-${state.mode}-${state.option}-${state.passageIndex}`,
 });
 
 function loadPassage() {
@@ -172,6 +185,7 @@ function positionText() {
   const x = current.offsetLeft;
   const y = current.offsetTop - shift;
   caretElement.style.transform = `translate(${x}px, ${y}px)`;
+  ghostRace.setScrollShift(shift);
 }
 
 function renderOptions() {
@@ -296,6 +310,8 @@ function startTest() {
   typingArea.classList.add("typing");
   statusElement.textContent = "typing...";
 
+  ghostRace.start();
+
   if (state.mode === "time") {
     state.timer = setInterval(() => {
       state.timeLeft--;
@@ -328,6 +344,10 @@ function finishTest() {
   const stats = calculateStats();
   const best = savePersonalBest(stats.wpm);
 
+  ghostRace.stop(
+  stats.wpm,
+  state.elapsed,);
+
   resultWpmElement.textContent = stats.wpm;
   resultAccuracyElement.textContent = `${stats.accuracy}%`;
   resultTimeElement.textContent = `${state.elapsed.toFixed(1)}s`;
@@ -351,6 +371,8 @@ function handleTyping(event) {
     }
 
     state.typed = state.typed.slice(0, -1);
+    ghostRace.record(state.typed.length);
+
     updateWordsRemaining();
     renderText();
     updateStats();
@@ -370,6 +392,8 @@ function handleTyping(event) {
   }
 
   state.typed += event.key;
+  ghostRace.record(state.typed.length);
+
   updateWordsRemaining();
   renderText();
   updateStats();
@@ -394,6 +418,8 @@ function resetTest() {
   typingArea.classList.remove("finished");
   promptElement.style.transform = "translateY(0)";
   resultElement.hidden = true;
+
+  ghostRace.reset();
 
   timeElement.textContent = state.option;
   timerUnitElement.textContent = state.mode === "time" ? "seconds" : "words";
