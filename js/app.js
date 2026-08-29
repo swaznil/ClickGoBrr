@@ -90,7 +90,10 @@ document.addEventListener("keydown", (event) => {
     return;
   }
 
-  if (event.key === "Escape") {
+  if (
+    event.key === "Escape" &&
+    document.getElementById("settings-mode;").classList.contains("hidden")
+  ) {
     document.body.classList.toggle("focus-mode");
   }
 });
@@ -344,9 +347,7 @@ function finishTest() {
   const stats = calculateStats();
   const best = savePersonalBest(stats.wpm);
 
-  ghostRace.stop(
-  stats.wpm,
-  state.elapsed,);
+  ghostRace.stop(stats.wpm, state.elapsed);
 
   resultWpmElement.textContent = stats.wpm;
   resultAccuracyElement.textContent = `${stats.accuracy}%`;

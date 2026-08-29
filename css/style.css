@@ -43,6 +43,9 @@ body {
 }
 
 .site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: min(1100px, 100%);
   margin: 0 auto 64px;
 }
@@ -345,7 +348,6 @@ body.focus-mode .typing-area {
   transform: translate(0, 0);
   transition: transform 80ms linear;
 }
-
 .ghost-caret::after {
   content: "PB";
   position: absolute;
@@ -354,9 +356,101 @@ body.focus-mode .typing-area {
   color: var(--ghost);
   font-size: 0.45rem;
 }
-
 .ghost-caret.hidden {
   display: none;
+}
+
+.settings-button {
+  padding: 6px 8px;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  font-size: 0.75rem;
+}
+.settings-button:hover {
+  color: var(--accent);
+  background: transparent;
+}
+
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+}
+.settings-modal.hidden {
+  display: none;
+}
+.settings-panel {
+  width: min(440px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #151515;
+}
+.settings-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.settings-header strong {
+  font-size: 0.9rem;
+}
+.settings-close {
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  font-size: 1.4rem;
+}
+.settings-close:hover {
+  color: var(--text);
+  background: transparent;
+}
+
+.setting {
+  min-height: 70px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.setting > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.settings strong {
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+.setting span {
+  color: var(--muted);
+}
+.setting input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent);
+}
+
+.volume-settig {
+  display: block;
+  border-bottom: 0;
+}
+.volume-setting > div {
+  margin-bottom: 14px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.volume-setting input {
+  width: 100%;
+  accent-color: var(--accent);
 }
 
 @media (max-width: 600px) {

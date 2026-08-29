@@ -16,6 +16,9 @@
   
   <header class="site-header">
     <a class="logo" href="/">ClickGoBrr</a>
+    <button id="settings-button" class ="settings-button"> 
+      settings
+    </button>
   </header>
 
   <main>
@@ -92,10 +95,50 @@
     </section>
   </main>
 
+  <div id="settings-modal" class="settings-modal hidden">
+    <div class="settings-panel">
+      <div class="settings-header">
+        <strong>Settings</strong>
+        <button id="settings-close" class="settings-close">×</button>
+      </div>
+
+      <div class="setting">
+        <div>
+          <strong>Music</strong>
+          <span>background soundtrack</span>
+        </div>
+
+        <input id="music-toggle" type="checkbox">
+      </div>
+
+      <div class="setting">
+        <div>
+          <strong>Ghost racer</strong>
+          <span>race against your personal best</span>
+        </div>
+
+        <input id="ghost-toggle" type="checkbox" checked>
+      </div>
+
+      <div class="setting volume-setting">
+        <div>
+          <strong>Music volume</strong>
+          <span id="volume-label">30%</span>
+        </div>
+
+        <input
+          id="music-volume" type="range" min="0" max="100" value="30">
+      </div>
+    </div>
+  </div>
+
   <footer class = "shortcuts">
     <span><kbd>tab</kbd> restart</span>
     <span><kbd>shift</kbd> + <kbd>enter</kbd> new text</span>
     <span><kbd>esc</kbd> focus</span>
   </footer>
+
+  <audio id="background-music" src="assets/retrowave-electronica.mp3" loop preload="metadata"></audio>
+  
 </body>
 </html>
