@@ -22,7 +22,9 @@ https://clickgobrr.vercel.app/
 
 ### Screenshots
 
-![Screenshot](assets/screenshot01.png)
+![Typing Test](assets/screenshot01.png)
+
+![Settings](assets/Screenshot02.png)
 
 ---
 
@@ -35,6 +37,8 @@ https://clickgobrr.vercel.app/
 - Multiple passages to test
 - Keyboard shortcuts
 - Focus mode
+- Live Background toggle
+- Background music
 
 ---
 
@@ -61,7 +65,7 @@ clickgobrr
 └── js/
     ├── app.js          # Typing logic
     ├── background.js   # Background canvas
-    ├── extra.js        # Ghost race and more
+    ├── extra.js        # Ghost race, Background music and more
     └── main.js         # Main script
 ```
 

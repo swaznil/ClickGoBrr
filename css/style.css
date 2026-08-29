@@ -424,15 +424,22 @@ button:hover {
 
 .shortcuts {
   position: fixed;
-  left: 50%;
+  left: clamp(16px, 2.5vw, 36px);
+  right: clamp(16px, 2.5vw, 36px);
   bottom: 2rem;
   z-index: 2;
   display: flex;
-  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
   color: var(--muted);
   font-family: "JetBrains Mono", monospace;
   font-size: 0.7rem;
-  transform: translateX(-50%);
+}
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 .shortcuts kbd {
   padding: 2px 5px;
@@ -440,6 +447,13 @@ button:hover {
   border-radius: 3px;
   color: var(--text);
   font: inherit;
+}
+.shortcuts a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.shortcuts a:hover {
+  color: var(--accent);
 }
 .site-header,
 .test-options,
