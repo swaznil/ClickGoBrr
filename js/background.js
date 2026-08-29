@@ -1,15 +1,33 @@
 export function initBackground() {
 const canvas = document.getElementById("Background");
+const backgroundToggle = document.getElementById("background-toggle");
 
 if (!canvas) {
   return;
 }
 
 const context = canvas.getContext("2d");
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let stars = [];
 let animationFrame = 0;
+let enabled = true;
+
+function loadSetting() {
+  try {
+    const settings =
+      JSON.parse(localStorage.getItem("clickgobrr-settings")) || {};
+    enabled = settings.background ?? true;
+  } catch {
+    enabled = true;
+  }
+}
+
+function clearCanvas() {
+  context.save();
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.restore();
+}
 
 function createStars(width, horizon) {
   stars = [];
@@ -19,7 +37,7 @@ function createStars(width, horizon) {
       x: Math.random() * width,
       y: Math.random() * horizon,
       size: Math.random() > 0.8 ? 1.5 : 1,
-      speed: 0.15 + Math.random() * 0.35,
+      speed: 10 + Math.random() * 14,
     });
   }
 }
@@ -35,19 +53,17 @@ function resize() {
 
   context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-  createStars(window.innerWidth, window.innerHeight);
+  createStars(window.innerWidth, window.innerHeight * 0.8);
 }
 
 function drawStars(width, horizon, time) {
-  context.fillStyle = "#f9faf4";
+  context.fillStyle = "#f2f4e8";
 
   for (const star of stars) {
-    const y = reducedMotion.matches
-      ? star.y
-      : (star.y + time * star.speed) % horizon;
+    const y = (star.y + time * star.speed) % horizon;
+    const twinkle = 0.35 + Math.sin(time * 2 + star.x) * 0.15;
 
-    context.globalAlpha = 0.45;
-
+    context.globalAlpha = twinkle;
     context.fillRect(star.x, y, star.size, star.size);
   }
 
@@ -90,7 +106,7 @@ function drawGrid(width, height, horizon, time) {
     context.stroke();
   }
 
-  const movement = reducedMotion.matches ? 0 : (time * 0.55) % 1;
+  const movement = (time * 1.2) % 1;
 
   for (let i = 0; i < 14; i++) {
     const progress = (i + movement) / 13;
@@ -109,12 +125,16 @@ function drawGrid(width, height, horizon, time) {
 }
 
 function draw(now = performance.now()) {
+  if (!enabled) {
+    return;
+  }
+
   const width = window.innerWidth;
   const height = window.innerHeight;
   const horizon = height * 0.8;
   const time = now / 1000;
 
-  context.clearRect(0, 0, width, height);
+  clearCanvas();
 
   drawStars(width, horizon, time);
   drawSun(width, horizon);
@@ -127,44 +147,61 @@ function draw(now = performance.now()) {
 
   drawGrid(width, height, horizon, time);
 
-  if (!reducedMotion.matches) {
-    animationFrame = requestAnimationFrame(draw);
-  }
+  animationFrame = requestAnimationFrame(draw);
 }
 
 function start() {
   cancelAnimationFrame(animationFrame);
+
+  if (!enabled) {
+    clearCanvas();
+    return;
+  }
+
   animationFrame = requestAnimationFrame(draw);
 }
 
 function stop() {
   cancelAnimationFrame(animationFrame);
   animationFrame = 0;
+  clearCanvas();
+}
+
+function setEnabled(value) {
+  enabled = value;
+
+  if (enabled) {
+    start();
+  } else {
+    stop();
+  }
 }
 
 window.addEventListener("resize", () => {
   resize();
-  stop();
-  draw();
 
-  if (!reducedMotion.matches) {
+  if (enabled) {
     start();
   }
 });
 
-reducedMotion.addEventListener("change", () => {
-  stop();
-  draw();
+if (backgroundToggle) {
+  backgroundToggle.addEventListener("change", () => {
+    setEnabled(backgroundToggle.checked);
+  });
+}
 
-  if (!reducedMotion.matches) {
-    start();
-  }
-});
+loadSetting();
+
+if (backgroundToggle) {
+  backgroundToggle.checked = enabled;
+}
 
 resize();
-draw();
 
-if (!reducedMotion.matches) {
+if (enabled) {
   start();
+} else {
+  clearCanvas();
 }
 }
