@@ -22,7 +22,7 @@ https://clickgobrr.vercel.app/
 
 ### Screenshots
 
-![Typing Test](assets/screenshot01.png)
+![Typing Test](assets/Screenshot01.png)
 
 ![Settings](assets/Screenshot02.png)
 
