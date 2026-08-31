@@ -12,11 +12,9 @@ I found many online typing tests to be filled with ads, and their servers were o
 
 ### Live Demo
 
-The project can be tried through the link:
+The project can be viewed through the link:
 
-```
-https://clickgobrr.vercel.app/
-```
+https://clickgobrr.vercel.app/ 
 
 ---
 
@@ -73,6 +71,7 @@ clickgobrr
 
 ### AI Usage
 
-AI has been used to review JavaScript code, but all the coding and final implementations were done by me.
+AI (ChatGPT) was used to review and improve javaScript code. Along with it AI was used to cleanup html code and create the animation for background canvas.
+Almost all the coding and final implementations were done by me.
 
 ---
