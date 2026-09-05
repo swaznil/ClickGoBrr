@@ -8,13 +8,7 @@ ClickGoBrr is a typing test designed with a retrowave aesthetic.
 
 I found many online typing tests to be filled with ads, and their servers were occasionally down. I also wanted complete customisability, especially for things like the background and overall design, so I decided to build my own typing test with the style and features I prefer.
 
----
-
-### Live Demo
-
-The project can be viewed through the link:
-
-https://clickgobrr.vercel.app/ 
+Try it here: https://clickgobrr.vercel.app/ 
 
 ---
 
@@ -28,21 +22,19 @@ https://clickgobrr.vercel.app/
 
 ### Features
 
-- Time Mode and Words Mode
-- Live WPM and Accuracy
-- Personal best records
-- Ghost race against best run
-- Multiple passages to test
+- Time and word modes
+- Live WPM and accuracy
+- Personal best
+- Ghost race against your best run
+- Multiple passages
 - Keyboard shortcuts
 - Focus mode
-- Live Background toggle
+- Live Background
 - Background music
 
+Among these features the ghost race and background music are my favoriate parts and a main point for me creating this instead of using other websites that lacked this.
+
 ---
-
-### Tech Stack
-
-HTML, CSS, JavaScript (Vanilla)
 
 ### How It Works
 
@@ -55,16 +47,24 @@ Personal best records are stored locally, and the ghost race saves the progress 
 ### Project Structure
 
 ```text
-clickgobrr
-├── index.html          # Main Page
-├── assets/             # Screenshots and other assets
-├── css/
-│   └── style.css       # Styling
-└── js/
-    ├── app.js          # Typing logic
-    ├── background.js   # Background canvas
-    ├── extra.js        # Ghost race, Background music and more
-    └── main.js         # Main script
+clickgobrr/
+|
+|-- index.html
+|-- README.md
+|
+|-- assets/
+|   |-- Screenshot01.png
+|   `-- Screenshot02.png
+|
+|-- css/
+|   `-- style.css
+|
+`-- js/
+    |-- app.js
+    |-- background.js
+    |-- extra.js
+    `-- main.js
+
 ```
 
 ---
