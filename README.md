@@ -55,6 +55,6 @@ clickgobrr/
 
 ### AI Usage
 
-I used ChatGPT to improve and debug javaScript code. Along with it, I took some help to create the background animation.
+I used ChatGPT to improve and debug javaScript code. Along with it, I took some help to create few parts of the background animation.
 
 ---

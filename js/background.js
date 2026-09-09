@@ -2,20 +2,20 @@ export function initBackground() {
 const canvas = document.getElementById("Background");
 const backgroundToggle = document.getElementById("background-toggle");
 
-if (!canvas) {
-  return;
-}
+if (!canvas) return;
 
 const context = canvas.getContext("2d");
 
 let stars = [];
-let animationFrame = 0;
+let animationFrame;
 let enabled = true;
 
 function loadSetting() {
   try {
-    const settings =
-      JSON.parse(localStorage.getItem("clickgobrr-settings")) || {};
+    const settings = JSON.parse(
+      localStorage.getItem("clickgobrr-settings") || "{}",
+    );
+
     enabled = settings.background ?? true;
   } catch {
     enabled = true;
@@ -23,10 +23,7 @@ function loadSetting() {
 }
 
 function clearCanvas() {
-  context.save();
-  context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.restore();
 }
 
 function createStars(width, horizon) {
@@ -44,19 +41,21 @@ function createStars(width, horizon) {
 
 function resize() {
   const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-  canvas.width = Math.round(window.innerWidth * ratio);
-  canvas.height = Math.round(window.innerHeight * ratio);
+  canvas.width = width * ratio;
+  canvas.height = height * ratio;
 
-  canvas.style.width = `${window.innerWidth}px`;
-  canvas.style.height = `${window.innerHeight}px`;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
 
   context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-  createStars(window.innerWidth, window.innerHeight * 0.8);
+  createStars(width, height * 0.8);
 }
 
-function drawStars(width, horizon, time) {
+function drawStars(horizon, time) {
   context.fillStyle = "#f2f4e8";
 
   for (const star of stars) {
@@ -76,7 +75,6 @@ function drawSun(width, horizon) {
   const y = horizon + radius * 0.1;
 
   context.save();
-
   context.fillStyle = "#fe52a0";
   context.globalAlpha = 0.4;
 
@@ -98,11 +96,9 @@ function drawGrid(width, height, horizon, time) {
   context.lineWidth = 1;
 
   for (let i = -16; i <= 16; i++) {
-    const bottomX = center + (i * width) / 12;
-
     context.beginPath();
     context.moveTo(center, horizon);
-    context.lineTo(bottomX, height);
+    context.lineTo(center + (i * width) / 12, height);
     context.stroke();
   }
 
@@ -110,12 +106,9 @@ function drawGrid(width, height, horizon, time) {
 
   for (let i = 0; i < 14; i++) {
     const progress = (i + movement) / 13;
+    if (progress > 1) continue;
 
-    if (progress > 1) {
-      continue;
-    }
-
-    const y = horizon + (height - horizon) * progress * progress;
+    const y = horizon + (height - horizon) * progress ** 2;
 
     context.beginPath();
     context.moveTo(0, y);
@@ -124,10 +117,8 @@ function drawGrid(width, height, horizon, time) {
   }
 }
 
-function draw(now = performance.now()) {
-  if (!enabled) {
-    return;
-  }
+function draw(now) {
+  if (!enabled) return;
 
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -135,8 +126,7 @@ function draw(now = performance.now()) {
   const time = now / 1000;
 
   clearCanvas();
-
-  drawStars(width, horizon, time);
+  drawStars(horizon, time);
   drawSun(width, horizon);
 
   context.strokeStyle = "rgba(200,255,79,0.4)";
@@ -153,36 +143,26 @@ function draw(now = performance.now()) {
 function start() {
   cancelAnimationFrame(animationFrame);
 
-  if (!enabled) {
+  if (enabled) {
+    animationFrame = requestAnimationFrame(draw);
+  } else {
     clearCanvas();
-    return;
   }
-
-  animationFrame = requestAnimationFrame(draw);
-}
-
-function stop() {
-  cancelAnimationFrame(animationFrame);
-  animationFrame = 0;
-  clearCanvas();
 }
 
 function setEnabled(value) {
   enabled = value;
 
-  if (enabled) {
-    start();
-  } else {
-    stop();
+  if (enabled) start();
+  else {
+    cancelAnimationFrame(animationFrame);
+    clearCanvas();
   }
 }
 
 window.addEventListener("resize", () => {
   resize();
-
-  if (enabled) {
-    start();
-  }
+  if (enabled) start();
 });
 
 if (backgroundToggle) {
@@ -198,10 +178,5 @@ if (backgroundToggle) {
 }
 
 resize();
-
-if (enabled) {
-  start();
-} else {
-  clearCanvas();
-}
+start();
 }
