@@ -55,7 +55,6 @@ clickgobrr/
 
 ### AI Usage
 
-AI (ChatGPT) was used to review and improve javaScript code. Along with it, AI was used to cleanup html code and create the animation for background canvas.
-Almost all the coding and final implementations were done by me.
+I used ChatGPT to improve and debug javaScript code. Along with it, I took some help to create the background animation.
 
 ---
