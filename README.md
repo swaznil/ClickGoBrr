@@ -24,9 +24,7 @@ Try it here: https://clickgobrr.vercel.app/
 
 - Time and word modes
 - Live WPM and accuracy
-- Personal best
-- Ghost race against your best run
-- Multiple passages
+- Ghost race against your personal best run
 - Keyboard shortcuts
 - Focus mode
 - Live Background
@@ -38,9 +36,8 @@ Among these features the ghost race and background music are my favoriate parts 
 
 ### How It Works
 
-Each character entered is compared with the current passage, and WPM + Accuracy are calculated while the test is running. Time Mode ends after the selected duration, whereas Words Mode ends once the selected number of words has been completed.
-
-Personal best records are stored locally, and the ghost race saves the progress of your best run and replays it during future tests.
+Each character entered is compared with the current passage and WPM along with Accuracy are calculated while the test is running.
+Time Mode ends after the selected duration of time passes. Word Mode ends once the selected number of words has been typed.Personal best records are stored locally, and the ghost race saves the progress of your best run and replays it during future tests.
 
 ---
 
@@ -48,30 +45,17 @@ Personal best records are stored locally, and the ghost race saves the progress 
 
 ```text
 clickgobrr/
-|
-|-- index.html
-|-- README.md
-|
-|-- assets/
-|   |-- Screenshot01.png
-|   `-- Screenshot02.png
-|
-|-- css/
-|   `-- style.css
-|
-`-- js/
-    |-- app.js
-    |-- background.js
-    |-- extra.js
-    `-- main.js
-
+    index.html
+    assets/
+    css/
+    js/
 ```
 
 ---
 
 ### AI Usage
 
-AI (ChatGPT) was used to review and improve javaScript code. Along with it AI was used to cleanup html code and create the animation for background canvas.
+AI (ChatGPT) was used to review and improve javaScript code. Along with it, AI was used to cleanup html code and create the animation for background canvas.
 Almost all the coding and final implementations were done by me.
 
 ---
